@@ -1,0 +1,23 @@
+
+services:
+  unidepth:
+    image: cdqoowarobot.com:4567/qoowa/qoowa/depth_estimation:unidepth-latest
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+      target: runtime
+    container_name: unidepth
+    ipc: host
+    runtime: ${RUNTIME:-nvidia}
+    privileged: true
+    environment:
+      - LOGNAME=$LOGNAME
+      - DISPLAY=$DISPLAY
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+
+# networks
+networks:
+  default:
+    name: unidepth
